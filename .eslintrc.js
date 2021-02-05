@@ -7,10 +7,13 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
-  rules: {
-    'import/prefer-default-export': 0
-  },
+  rules: {},
   env: {
-    node: true
+    es2020: true,
+    node: true,
+    es6: true
+  },
+  globals: {
+    __dirname: true
   }
 };
