@@ -1,0 +1,46 @@
+import { Request, Response } from 'express';
+import { getConnection } from 'typeorm';
+import { validate } from 'class-validator';
+
+import User from '../entities/postgres/User';
+
+export default {
+  async create(request: Request, response: Response): Promise<void> {
+    const { email, password, password_confirmation } = request.body;
+
+    // verify if exist email and password and password confirmation
+    if (!(email && password && password_confirmation)) {
+      response.status(400).json({ error: 'Fill in all fields' });
+      return;
+    }
+
+    try {
+      const user = new User();
+
+      if (password !== password_confirmation) {
+        response.status(401).json({ error: 'Passwords do not match ' });
+        return;
+      }
+
+      user.email = email;
+      user.password = password;
+
+      const errors = await validate(user);
+      if (errors.length > 0) {
+        response.status(401).json({ error: errors });
+        return;
+      }
+
+      user.hashPassword();
+
+      const userRepository = getConnection('postgresdb').getRepository(User);
+      await userRepository.save(user);
+
+      response.status(201).json({ message: 'User created with sucess!' });
+      return;
+    } catch (error) {
+      response.status(409).json({ error: 'Email already in use.' });
+      return;
+    }
+  }
+};

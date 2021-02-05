@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nodejs-oracle
+    image: douglastofoli/nodejs-oracle:latest
+    ports:
+      - '3333:3333'
+    volumes:
+      - './:/app'
