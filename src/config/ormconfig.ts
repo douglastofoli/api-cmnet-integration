@@ -1,11 +1,14 @@
 import * as path from 'path';
 import dotenv from 'dotenv';
+// import { ConnectionOptions } from 'typeorm';
 
 dotenv.config();
 
 const baseDir = path.join(__dirname, '../');
 const entitiesPath = `${baseDir}${process.env.TYPEORM_ENTITIES}`;
 const migrationsPath = `${baseDir}${process.env.TYPEORM_MIGRATIONS}`;
+
+// const config: ConnectionOptions = {};
 
 export const db1 = {
   name: process.env.DB1_NAME,
