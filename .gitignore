@@ -3,7 +3,6 @@
 
 .env
 
-Dockerfile
 yarn.lock
 yarn-error.log
 
