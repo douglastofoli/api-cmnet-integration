@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
+    "build": "tsc",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -f ormconfig.json",
     "lint": "eslint . --ext .ts",
     "test": "jest"
