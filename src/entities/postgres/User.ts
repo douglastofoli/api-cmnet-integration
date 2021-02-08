@@ -22,6 +22,9 @@ export default class User {
   @Length(6, 32)
   public password: string;
 
+  @Column({ default: false })
+  public active: boolean;
+
   @Column()
   @CreateDateColumn()
   public createdAt: Date;
@@ -36,5 +39,9 @@ export default class User {
 
   checkIfPasswordIsValid(unencryptedPassword: string): boolean {
     return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
+
+  checkIfUserIsActivated(active: boolean): boolean {
+    return active === true;
   }
 }

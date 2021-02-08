@@ -22,19 +22,23 @@ export default {
 
       const user = await userRepository.findOneOrFail({ where: { email } });
 
+      if (!user.checkIfUserIsActivated(user.active)) {
+        response.status(403).json({ error: 'User is not activated' });
+        return;
+      }
+
       if (!user.checkIfPasswordIsValid(password)) {
         response.status(401).json({ error: 'Incorrect email or password' });
         return;
-      } else {
-        const token = jwt.sign(
-          { userId: user.id, email: user.email },
-          jwtConfig.jwtSecret,
-          { expiresIn: '1h' }
-        );
-
-        response.status(200).json(usersView.render(user, token));
-        return;
       }
+      const token = jwt.sign(
+        { userId: user.id, email: user.email },
+        jwtConfig.jwtSecret,
+        { expiresIn: '1h' }
+      );
+
+      response.status(200).json(usersView.render(user, token));
+      return;
     } catch (error) {
       console.log(error);
       response.status(401).json({ error: 'Incorrect email or password.' });
