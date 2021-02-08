@@ -1,0 +1,16 @@
+.vscode
+dist
+node_modules
+tests
+
+.editorconfig
+.env.example
+.eslintignore
+.eslintrc.js
+.gitignore
+.prettierrc.js
+
+jest.config.ts
+README.md
+
+yarn.lock
