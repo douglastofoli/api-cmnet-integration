@@ -45,38 +45,11 @@ WORKDIR /usr/app
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 
-# ENV HTTP_PORT 3333
-
-# ENV DB1_NAME oracledb
-# ENV DB1_CONNECTION oracle
-# ENV DB1_HOST 172.23.0.250
-# ENV DB1_USERNAME cm
-# ENV DB1_PASSWORD getic01
-# ENV DB1_DATABASE cm
-# ENV DB1_PORT 1521
-# ENV DB1_SYNCHRONIZE true
-# ENV DB1_ENTITIES src/entities/oracle/*{.ts,.js}
-# ENV DB1_ENTITIES_DIR src/entities/oracle
-# ENV DB1_SID cm
-
-# ENV DB2_NAME postgresdb
-# ENV DB2_CONNECTION postgres
-# ENV DB2_HOST 172.17.0.1
-# ENV DB2_USERNAME postgres
-# ENV DB2_PASSWORD @thermaspg@
-# ENV DB2_DATABASE api-cm
-# ENV DB2_PORT 5432
-# ENV DB1_SYNCHRONIZE true
-# ENV DB2_ENTITIES src/entities/postgres/*{.ts,.js}
-# ENV DB2_MIGRATIONS src/database/migrations/*{.ts,.js}
-# ENV DB2_MIGRATIONS_RUN src/database/migrations
-# ENV DB2_ENTITIES_DIR src/entities/postgres
-
-# ENV JWT_SECRET 2f58cd689fe4e2d4db80b085e7c1049c
-
 COPY package*.json ./
 
 RUN npm install
+
+RUN npx tsc
 
 COPY . .
 
