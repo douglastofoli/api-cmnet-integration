@@ -1,10 +1,34 @@
 version: '3'
 
 services:
-  nginx:
-    container_name: nodejs-oracle
+  postgres:
+    image: postgres:latest
+    container_name: api-postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: '@thermaspg@'
+      POSTGRES_DB: 'api-cm'
+    ports:
+      - '5432:5432'
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - network-api-cm
+
+  app:
+    container_name: api-cmnet
     image: douglastofoli/nodejs-oracle:latest
+    restart: always
     ports:
       - '3333:3333'
     volumes:
       - './:/app'
+    depends_on:
+      - postgres
+    networks:
+      - network-api-cm
+
+networks:
+  network-api-cm:
+    driver: bridge
+
