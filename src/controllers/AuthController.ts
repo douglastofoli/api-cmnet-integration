@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 import jwt from 'jsonwebtoken';
 
-import jwtConfig from '../config/jwtConfig';
+import jwtConfig from '../configs/jwtConfig';
 
 import User from '../entities/postgres/User';
 import usersView from '../views/users_view';

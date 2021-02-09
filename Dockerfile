@@ -49,9 +49,9 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npx tsc
-
 COPY . .
+
+RUN npx tsc
 
 EXPOSE 3333
 

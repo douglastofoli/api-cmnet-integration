@@ -1,4 +1,4 @@
-import jwtConfig from '../../src/config/jwtConfig';
+import jwtConfig from '../../src/configs/jwtConfig';
 
 describe('jwtConfig', () => {
   it('should have more than 32 characters', () => {

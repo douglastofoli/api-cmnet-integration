@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import jwtConfig from '../config/jwtConfig';
+import jwtConfig from '../configs/jwtConfig';
 
 interface IUserData {
   userId: string;
