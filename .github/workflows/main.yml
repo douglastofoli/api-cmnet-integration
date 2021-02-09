@@ -31,4 +31,7 @@ jobs:
       with:
         node-version: '14'
     - run: npm install
+      env:
+        JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
+        HTTP_PORT: ${{ secrets.HTTP_PORT }}
     - run: npm test
