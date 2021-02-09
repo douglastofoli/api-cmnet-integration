@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/src/index.js",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
+    "start": "node -r tsconfig-paths/register dist/src/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
     "build": "npx tsc",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -f ormconfig.json",
     "lint": "eslint . --ext .ts",
@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.30",
     "yup": "^0.32.8"
   },
@@ -47,7 +48,7 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "supertest": "^6.1.3",
-    "ts-jest": "^26.5.0",
+    "ts-jest": "^26.5.1",
     "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3"
   },
