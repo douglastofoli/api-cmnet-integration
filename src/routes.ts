@@ -14,6 +14,7 @@ routes.post('/user/create', UserController.create);
 routes.post('/auth/login', AuthController.login);
 
 // Search routes
+// Authenticated routes
 routes.get('/users/get', [Auth], OracleController.index);
 
 export default routes;
