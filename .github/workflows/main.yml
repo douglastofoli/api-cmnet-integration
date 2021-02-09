@@ -26,8 +26,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     env:
-      JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-      HTTP_PORT: ${{ secrets.HTTP_PORT }}
+      JWT_TOKEN: ${{ secrets.env.JWT_TOKEN }}
+      HTTP_PORT: ${{ secrets.env.HTTP_PORT }}
+
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
