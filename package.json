@@ -1,7 +1,8 @@
 {
   "name": "api-cm",
-  "version": "0.1.5",
-  "main": "index.js",
+  "description": "This API communicate with CM database",
+  "version": "0.1.6",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "start": "node -r tsconfig-paths/register dist/src/index.js",
@@ -11,6 +12,18 @@
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
+  "engines": {
+    "node": "14.15.4"
+  },
+  "bugs": {
+    "url": "https://github.com/douglastofoli/api-cmnet-integration/issues",
+    "email": "contact@dougrt.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/douglastofoli/api-cmnet-integration.git"
+  },
+  "homepage": "https://github.com/douglastofoli/api-cmnet-integration",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.3.2",
@@ -59,6 +72,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
+      "npm test",
       "eslint --fix"
     ]
   }
