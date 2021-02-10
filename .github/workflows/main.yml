@@ -33,8 +33,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
       env:
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        HTTP_PORT: ${{ secrets.HTTP_PORT }}
+        JWT_SECRET: ${{ env.JWT_SECRET }}
+        HTTP_PORT: ${{ env.HTTP_PORT }}
 
     - run: |
           touch .env
