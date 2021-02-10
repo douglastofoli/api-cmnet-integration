@@ -38,8 +38,8 @@ jobs:
 
     - run: |
           touch .env
-          echo JWT_SECRET="2f58cd689fe4e2d4db80b085e7c1049c" >> .env
-          echo HTTP_PORT=3333 >> .env
+          echo JWT_SECRET=${{JWT_SECRET}} >> .env
+          echo HTTP_PORT=${{HTTP_PORT}} >> .env
           cat .env
 
     - run: npm install
