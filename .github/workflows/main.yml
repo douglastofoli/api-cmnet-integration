@@ -32,14 +32,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-      env:
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        HTTP_PORT: ${{ secrets.HTTP_PORT }}
+      # env:
+      #   JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      #   HTTP_PORT: ${{ secrets.HTTP_PORT }}
 
     - run: |
           touch .env
-          echo JWT_SECRET=${JWT_SECRET} >> .env
-          echo HTTP_PORT=${HTTP_PORT} >> .env
+          echo JWT_SECRET="d4d1c93999f913703e6e0524b17520ef" >> .env
+          echo HTTP_PORT=3333 >> .env
           cat .env
 
     - run: npm install
