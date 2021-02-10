@@ -26,7 +26,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     env:
-      JWT_TOKEN: ${{ env.JWT_SECRET }}
+      JWT_SECRET: ${{ env.JWT_SECRET }}
       HTTP_PORT: ${{ env.HTTP_PORT }}
 
     steps:
