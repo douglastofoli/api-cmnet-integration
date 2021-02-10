@@ -36,6 +36,11 @@ jobs:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         HTTP_PORT: ${{ secrets.HTTP_PORT }}
 
-    - run: export JWT_SECRET=${JWT_SECRET} && export HTTP_PORT=${HTTP_PORT}
+    - run: |
+          touch .env
+          echo JWT_SECRET=${JWT_SECRET} >> .env
+          echo HTTP_PORT=${HTTP_PORT} >> .env
+          cat .env
+
     - run: npm install
     - run: npm test
