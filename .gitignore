@@ -3,7 +3,6 @@
 
 .env
 
-!data
 data/*.csv
 
 yarn.lock
