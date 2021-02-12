@@ -3,6 +3,9 @@
 
 .env
 
+!data
+data/*.csv
+
 yarn.lock
 yarn-error.log
 
