@@ -1,12 +1,16 @@
 import { ExportToCsv } from 'export-to-csv';
 import fs from 'fs';
 
+import formatString from '../utils/formatString';
+
+import { IData } from './formatString';
+
 const exportCSV = (
   headerName: string,
   headerMonth: string,
   headerYear: string,
-  data: string[]
-): void => {
+  data: IData[]
+): IData[] => {
   const options = {
     fieldSeparator: ';',
     quoteStrings: '"',
@@ -46,8 +50,12 @@ const exportCSV = (
   // '-' +
   // date.getSeconds();
 
-  const csvData = csvExporter.generateCsv(data, true);
+  const formatedString = formatString(data);
+
+  const csvData = csvExporter.generateCsv(formatedString, true);
   fs.writeFileSync(`data/${dateFormated}.csv`, csvData);
+
+  return formatedString;
 };
 
 export default exportCSV;
