@@ -13,7 +13,7 @@ const exportCSV = (
 ): IData[] => {
   const options = {
     fieldSeparator: ';',
-    quoteStrings: '"',
+    quoteStrings: '',
     decimalSeparator: '.',
     showLabels: true,
     showTitle: false,
@@ -42,18 +42,22 @@ const exportCSV = (
   ];
   const date = new Date();
   const dateFormated =
-    date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-  // ' ' +
-  // date.getHours() +
-  // '-' +
-  // date.getMinutes() +
-  // '-' +
-  // date.getSeconds();
+    date.getDate() +
+    '_' +
+    months[date.getMonth()] +
+    '_' +
+    date.getFullYear() +
+    '_' +
+    date.getHours() +
+    '-' +
+    date.getMinutes() +
+    '-' +
+    date.getSeconds();
 
   const formatedString = formatString(data);
 
   const csvData = csvExporter.generateCsv(formatedString, true);
-  fs.writeFileSync(`data/${dateFormated}.csv`, csvData);
+  fs.writeFileSync(`data/${headerName}_${dateFormated}.csv`, csvData);
 
   return formatedString;
 };

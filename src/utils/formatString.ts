@@ -1,15 +1,15 @@
 export interface IData {
   MES: number;
   ANO: number;
-  DATADOC: string;
+  DATA: string;
   CODUNIDADE: number;
   CODCENTROCUSTO: string;
-  NOME: string;
+  DESCCODCENTROCUSTO: string;
+  CODCONTACONTABIL: string;
+  DESCCONTACONTABIL: string;
   NATUREZA: string;
   VALOR: number;
   HISTORICO: string;
-  PLANOCONTA: string;
-  PLANONOME: string;
 }
 
 const formatString = (data: IData[]): IData[] => {
@@ -17,15 +17,15 @@ const formatString = (data: IData[]): IData[] => {
     return {
       MES: item.MES,
       ANO: item.ANO,
-      DATADOC: item.DATADOC.trim(),
+      DATA: item.DATA.trim(),
       CODUNIDADE: item.CODUNIDADE,
       CODCENTROCUSTO: item.CODCENTROCUSTO.trim(),
-      NOME: item.NOME.trim(),
+      DESCCODCENTROCUSTO: item.DESCCODCENTROCUSTO.trim(),
+      CODCONTACONTABIL: item.CODCONTACONTABIL.trim(),
+      DESCCONTACONTABIL: item.DESCCONTACONTABIL.trim(),
       NATUREZA: item.NATUREZA.trim(),
       VALOR: item.VALOR,
-      HISTORICO: item.HISTORICO.trim(),
-      PLANOCONTA: item.PLANOCONTA.trim(),
-      PLANONOME: item.PLANONOME.trim()
+      HISTORICO: item.HISTORICO.trim()
     };
   });
 };

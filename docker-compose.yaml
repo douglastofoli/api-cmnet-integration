@@ -1,22 +1,8 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:latest
-    container_name: api-postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: '@thermaspg@'
-      POSTGRES_DB: 'api-cm'
-    ports:
-      - '5432:5432'
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      - network-api-cm
-
   app:
-    container_name: api-cmnet
+    container_name: api-cmnet-integration
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,8 +12,6 @@ services:
       - '3333:3333'
     volumes:
       - './:/usr/app'
-    depends_on:
-      - postgres
     networks:
       - network-api-cm
 
