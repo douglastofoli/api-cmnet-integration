@@ -8,4 +8,6 @@ const routes = Router();
 
 routes.get('/dre/get', [Auth], MabuThermasDreController.index);
 
+routes.get('/dre/get/download', MabuThermasDreController.downloadFile);
+
 export default routes;

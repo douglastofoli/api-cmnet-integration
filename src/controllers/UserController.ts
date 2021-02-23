@@ -6,10 +6,10 @@ import User from '../entities/postgres/User';
 
 export default {
   async create(request: Request, response: Response): Promise<void> {
-    const { email, password, password_confirmation } = request.body;
+    const { email, password, passwordConfirmation } = request.body;
 
     // verify if exist email and password and password confirmation
-    if (!(email && password && password_confirmation)) {
+    if (!(email && password && passwordConfirmation)) {
       response.status(400).json({ error: 'Fill in all fields' });
       return;
     }
@@ -17,7 +17,7 @@ export default {
     try {
       const user = new User();
 
-      if (password !== password_confirmation) {
+      if (password !== passwordConfirmation) {
         response.status(401).json({ error: 'Passwords do not match ' });
         return;
       }

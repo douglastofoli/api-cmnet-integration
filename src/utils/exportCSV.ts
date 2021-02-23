@@ -50,9 +50,7 @@ const exportCSV = (
     '_' +
     date.getHours() +
     '-' +
-    date.getMinutes() +
-    '-' +
-    date.getSeconds();
+    date.getMinutes();
 
   const formatedString = formatString(data);
 

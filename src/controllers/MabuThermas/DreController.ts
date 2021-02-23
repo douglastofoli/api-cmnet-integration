@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import path from 'path';
 import { getManager } from 'typeorm';
 
 import exportCSV from '../../utils/exportCSV';
@@ -190,10 +191,62 @@ export default {
       const formatedData = exportCSV('DRE', mes, ano, data);
 
       response.status(200).json({ data: formatedData });
+
+      return;
+    } catch (error) {
+      // console.log(error);
+      response.status(500).json({ error });
+      return;
+    }
+  },
+  downloadFile(request: Request, response: Response): void {
+    try {
+      const options = {
+        root: path.join(__dirname, '..', '..', '..', 'data'),
+        dotfiles: 'deny',
+        headers: {
+          'x-timestamp': Date.now(),
+          'x-sent': true
+        }
+      };
+
+      const date = new Date();
+      const months = [
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez'
+      ];
+      const dateFormated =
+        date.getDate() +
+        '_' +
+        months[date.getMonth()] +
+        '_' +
+        date.getFullYear() +
+        '_' +
+        date.getHours() +
+        '-' +
+        date.getMinutes();
+
+      response.sendFile(`DRE_${dateFormated}.csv`, options, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Sent:', `DRE_${dateFormated}.csv`);
+        }
+      });
+
       return;
     } catch (error) {
       response.status(500).json({ error: 'Internal server error' });
-      return;
     }
   }
 };
