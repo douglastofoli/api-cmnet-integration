@@ -1,0 +1,22 @@
+name: "Test"
+
+on:
+  push:
+    branches: [server]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          HTTP_PORT: ${{ secrets.HTTP_PORT }}
+
+      - name: Install dependencies
+        run: yarn install
+      - name: Make tests
+        run: yarn test
