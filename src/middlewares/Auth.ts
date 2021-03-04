@@ -25,9 +25,7 @@ const Auth = (
     response.locals.jwtPayload = jwtPayload;
 
     const { userId, email } = jwtPayload;
-    const newToken = jwt.sign({ userId, email }, jwtConfig.jwtSecret, {
-      expiresIn: '1h'
-    });
+    const newToken = jwt.sign({ userId, email }, jwtConfig.jwtSecret);
 
     response.setHeader('x-access-token', newToken);
 

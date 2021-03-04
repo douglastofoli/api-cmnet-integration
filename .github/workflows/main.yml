@@ -6,9 +6,9 @@ name: NodeJS CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ server ]
   pull_request:
-    branches: [ main ]
+    branches: [ server ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,15 +32,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-      # env:
-      #   JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      #   HTTP_PORT: ${{ secrets.HTTP_PORT }}
-
-    - run: |
-          touch .env
-          echo JWT_SECRET="d4d1c93999f913703e6e0524b17520ef" >> .env
-          echo HTTP_PORT=3333 >> .env
-          cat .env
+      env:
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        HTTP_PORT: ${{ secrets.HTTP_PORT }}
 
     - run: npm install
     - run: npm test

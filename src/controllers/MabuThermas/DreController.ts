@@ -17,6 +17,8 @@ export default {
 
     const manager = getManager('oracledb');
 
+    const octal_escapa = '\\1.\\2.\\3.\\4.\\5.\\6';
+
     try {
       const data = await manager.query(
         `
@@ -24,10 +26,10 @@ export default {
           S.PERNUMERO AS MES,
           S.PEREXERCICIO AS ANO,
           TO_CHAR(S.PLNDATDIA, 'DD/MM/YYYY') AS DATA,
-          S.IDPESSOA AS CODUNIDADE,
-          S.CODCENTROCUSTO,
+          LPAD(S.IDPESSOA, 2, '0') AS CODUNIDADE,
+          LPAD(TRIM(S.CODCENTROCUSTO), 10, '01.') AS CODCENTROCUSTO,
           CC.NOME AS DESCCODCENTROCUSTO,
-          C.PLACONTA AS CODCONTACONTABIL,
+          REGEXP_REPLACE(LPAD(C.PLACONTA, 10, '0'), '([0-9]{1})([0-9]{1})([0-9]{1})([0-9]{2})([0-9]{2})([0-9]{3})', '${octal_escapa}') AS CODCONTACONTABIL,
           DECODE(PD.PLANOME, NULL, C.PLANOME, PD.PLANOME) AS DESCCONTACONTABIL,
           S.NUMDOC,
           DECODE(NVL(S.MOV, 0.00), 0.00, ' ', DECODE(SIGN(S.MOV), -1.00, 'C', 'D' )) AS NATUREZA,
@@ -112,12 +114,12 @@ export default {
             P.IDPESSOA,
             L.LACHIST1,
             P.PLNDATDIA,
-                NVL(L.LACNUMDOC, TO_CHAR(P.PLNDATDIA, 'DD/MM/YYYY')) AS NUMDOC,
+            NVL(L.LACNUMDOC, TO_CHAR(P.PLNDATDIA, 'DD/MM/YYYY')) AS NUMDOC,
             SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, 0.00)) AS DEB,
             SUM(DECODE(L.LACDEBCRE, 'C', L.LACVALOR, 0.00)) AS CRED,
             SUM(DECODE(C.PLATIPO, 'A', DECODE(L.LACDEBCRE, 'D', L.LACVALOR, 0.00), 0.00)) AS DEBA,
             SUM(DECODE(C.PLATIPO, 'A', DECODE(L.LACDEBCRE, 'C', L.LACVALOR, 0.00), 0.00)) AS CREDA,
-            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR*-1)) AS MOV ,
+            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR)) AS MOV ,
             L.CODCENTROCUSTO
           FROM
             PLANOCONTA C,
@@ -185,6 +187,7 @@ export default {
           ((DECODE(NVL(S.DEB, 0.00), 0.00, (DECODE(NVL(S.CRED, 0.00), 0.00, (DECODE(NVL(SN.SALDOAN, 0.00), 0.00, (DECODE(NVL(SA.SALDOANT, 0.00), 0.00, '0', '1')), '1')), '1')), '1')) = '1')
         ORDER BY
           C.PLACONTA
+
         `
       );
 

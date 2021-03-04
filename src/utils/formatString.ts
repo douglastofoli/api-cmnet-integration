@@ -7,6 +7,7 @@ export interface IData {
   DESCCODCENTROCUSTO: string;
   CODCONTACONTABIL: string;
   DESCCONTACONTABIL: string;
+  NUMDOC: string;
   NATUREZA: string;
   VALOR: number;
   HISTORICO: string;
@@ -23,6 +24,7 @@ const formatString = (data: IData[]): IData[] => {
       DESCCODCENTROCUSTO: item.DESCCODCENTROCUSTO.trim(),
       CODCONTACONTABIL: item.CODCONTACONTABIL.trim(),
       DESCCONTACONTABIL: item.DESCCONTACONTABIL.trim(),
+      NUMDOC: item.NUMDOC.trim(),
       NATUREZA: item.NATUREZA.trim(),
       VALOR: item.VALOR,
       HISTORICO: item.HISTORICO.trim()

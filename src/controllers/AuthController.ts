@@ -33,8 +33,7 @@ export default {
       }
       const token = jwt.sign(
         { userId: user.id, email: user.email },
-        jwtConfig.jwtSecret,
-        { expiresIn: '1h' }
+        jwtConfig.jwtSecret
       );
 
       response.status(200).json(usersView.render(user, token));
