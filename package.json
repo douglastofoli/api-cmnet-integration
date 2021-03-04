@@ -4,7 +4,6 @@
   "version": "0.1.6",
   "main": "dist/index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "start": "node -r tsconfig-paths/register dist/src/index.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
