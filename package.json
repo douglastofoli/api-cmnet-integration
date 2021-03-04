@@ -12,9 +12,6 @@
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
-  "engines": {
-    "node": "14.15.x"
-  },
   "bugs": {
     "url": "https://github.com/douglastofoli/api-cmnet-integration/issues",
     "email": "contact@dougrt.dev"
