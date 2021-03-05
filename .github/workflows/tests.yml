@@ -8,14 +8,12 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+    env:
+      HTTP_PORT: ${{ secrets.HTTP_PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
     steps:
       - uses: actions/setup-node@v2
       - uses: actions/checkout@v2
-
-        env:
-          HTTP_PORT: ${{ secrets.HTTP_PORT }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
       - name: Install dependencies
         run: yarn install
       - name: Make tests
