@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 import jwtConfig from '../configs/jwtConfig';
 
@@ -20,7 +23,9 @@ export default {
     }
 
     try {
-      const userRepository = getConnection('postgresdb').getRepository(User);
+      const userRepository = getConnection(process.env.DB1_NAME).getRepository(
+        User
+      );
 
       const user = await userRepository.findOneOrFail({ where: { email } });
 

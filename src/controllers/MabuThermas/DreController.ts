@@ -15,7 +15,7 @@ export default {
     const mes: string = request.query.mes as string;
     const ano: string = request.query.ano as string;
 
-    const manager = getManager('oracledb');
+    const manager = getManager(process.env.DB2_NAME);
 
     const octal_escapa = '\\1.\\2.\\3.\\4.\\5.\\6';
 

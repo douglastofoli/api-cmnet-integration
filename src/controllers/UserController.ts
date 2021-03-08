@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 import { validate } from 'class-validator';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 import User from '../entities/postgres/User';
 
@@ -35,13 +38,15 @@ export default {
 
       user.hashPassword();
 
-      const userRepository = getConnection('postgresdb').getRepository(User);
+      const userRepository = getConnection(process.env.DB1_NAME).getRepository(
+        User
+      );
       await userRepository.save(user);
 
       response.status(201).json({ message: 'Usuário registrado com sucesso!' });
       return;
     } catch (error) {
-      response.status(409).json({ error: 'E-mail já está em uso.' });
+      response.status(409).json({ error: error });
       return;
     }
   }

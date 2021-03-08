@@ -1,14 +1,31 @@
 version: '3'
 
 services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: '@thermas@'
+    ports:
+      - '5432:5432'
+    volumes:
+      - /home/mabu/Docker/postgresql:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - network-api-cm
+
   app:
     container_name: api-cmnet-integration
+    depends_on:
+      - postgres
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     command: npm run dev
     ports:
-      - '3333:3333'
+      - '7777:7777'
     volumes:
       - './:/usr/app'
     networks:
