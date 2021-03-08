@@ -10,7 +10,9 @@ export default {
 
     // verify if exist email and password and password confirmation
     if (!(email && password && passwordConfirmation)) {
-      response.status(400).json({ error: 'Fill in all fields' });
+      response
+        .status(400)
+        .json({ error: 'Por favor, preencha todos os campos.' });
       return;
     }
 
@@ -18,7 +20,7 @@ export default {
       const user = new User();
 
       if (password !== passwordConfirmation) {
-        response.status(401).json({ error: 'Passwords do not match ' });
+        response.status(401).json({ error: 'As senhas não coincidem.' });
         return;
       }
 
@@ -36,10 +38,10 @@ export default {
       const userRepository = getConnection('postgresdb').getRepository(User);
       await userRepository.save(user);
 
-      response.status(201).json({ message: 'User created with sucess!' });
+      response.status(201).json({ message: 'Usuário registrado com sucesso!' });
       return;
     } catch (error) {
-      response.status(409).json({ error: 'Email already in use.' });
+      response.status(409).json({ error: 'E-mail já está em uso.' });
       return;
     }
   }

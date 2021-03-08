@@ -13,7 +13,9 @@ export default {
 
     // verify if exist email and password
     if (!(email && password)) {
-      response.status(400).json({ error: 'Fill in all fields' });
+      response
+        .status(400)
+        .json({ error: 'Por favor, preencha todos os campos.' });
       return;
     }
 
@@ -23,12 +25,12 @@ export default {
       const user = await userRepository.findOneOrFail({ where: { email } });
 
       if (!user.checkIfUserIsActivated(user.active)) {
-        response.status(403).json({ error: 'User is not activated' });
+        response.status(403).json({ error: 'Usuário não está ativado.' });
         return;
       }
 
       if (!user.checkIfPasswordIsValid(password)) {
-        response.status(401).json({ error: 'Incorrect email or password' });
+        response.status(401).json({ error: 'E-mail ou senha incorretos.' });
         return;
       }
       const token = jwt.sign(
@@ -40,7 +42,7 @@ export default {
       return;
     } catch (error) {
       console.log(error);
-      response.status(401).json({ error: 'Incorrect email or password.' });
+      response.status(401).json({ error: 'E-mail ou senha incorretos.' });
       return;
     }
   }

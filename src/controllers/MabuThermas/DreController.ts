@@ -243,7 +243,7 @@ export default {
         if (err) {
           console.log(err);
         } else {
-          console.log('Sent:', `DRE_${dateFormated}.csv`);
+          console.log('Enviado:', `DRE_${dateFormated}.csv`);
         }
       });
 
