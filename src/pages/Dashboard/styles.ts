@@ -1,14 +1,60 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-  
   body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     line-height: 1.42em;
     color:#A7A1AE;
     background-color:#1F2739;
+  }
+`;
+
+export const Text = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  text-align: center;
+`;
+
+export const Input = styled.input`
+  font-size: 1rem;
+  line-height: 1.2;
+  padding: 10px 16px;
+  border: 3px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  margin-left: 10px;
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+`;
+
+export const Button = styled.button`
+  font-family: 'Roboto', sans-serif;
+  -webkit-appearance: none;
+  font-size: 1rem;
+  text-shadow: none;
+  line-height: 1.2;
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 0 10px 0 0;
+  position: relative;
+  border-radius: 4px;
+  border: 3px solid transparent;
+  background: #444857;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none !important;
+  text-align: center;
+  font-weight: normal !important;
+  margin: 10px;
+  transition: 0.25s;
+
+  &:hover {
+    background: #60636d;
   }
 `;
 
@@ -19,6 +65,13 @@ export const Table = styled.table`
   margin: 0 auto;
   display: table;
   padding: 0 0 8em 0;
+`;
+
+export const Caption = styled.caption`
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  text-align: center;
 `;
 
 export const Tr = styled.tr`
@@ -41,12 +94,11 @@ export const Tr = styled.tr`
 export const Th = styled.th`
   font-weight: bold;
   font-size: 1em;
-  text-align: left;
+  text-align: center;
   color: #185875;
 
   padding-bottom: 2%;
   padding-top: 2%;
-  padding-left: 2%;
 
   background-color: #1f2739;
 
@@ -66,8 +118,8 @@ export const Td = styled.td`
 
   padding-bottom: 2%;
   padding-top: 2%;
-  padding-left: 2%;
-
+  /* padding-left: 2%; */
+  text-align: center;
   &:first-child {
     color: #fb667a;
   }
@@ -93,31 +145,3 @@ export const Td = styled.td`
     }
   }
 `;
-// export const Table = styled.table`
-//   font-family: Arial, Helvetica, sans-serif;
-//   border-collapse: collapse;
-//   font-size: 14px;
-//   width: 100%;
-
-//   & text-decoration,
-//   & th {
-//     border: 1px solid #ddd;
-//     padding: 8px;
-//   }
-
-//   & tr:nth-child(even) {
-//     background-color: #f2f2f2;
-//   }
-
-//   & tr:hover {
-//     background-color: #ddd;
-//   }
-
-//   & th {
-//     padding-top: 12px;
-//     padding-bottom: 12px;
-//     text-align: left;
-//     background-color: #4caf50;
-//     color: white;
-//   }
-// `;

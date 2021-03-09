@@ -7,7 +7,17 @@ import { getToken, logout } from '../../services/auth';
 
 import Loader from '../../components/Loader';
 
-import { GlobalStyle, Table, Tr, Th, Td } from './styles';
+import {
+  GlobalStyle,
+  Text,
+  Input,
+  Button,
+  Table,
+  Caption,
+  Tr,
+  Th,
+  Td
+} from './styles';
 
 interface IData {
   MES: number;
@@ -81,26 +91,26 @@ const Dashboard: React.FC = (): ReactElement => {
       <GlobalStyle />
       <div>
         {error && <p>{error}</p>}
-        <p>Gerar DRE MTR</p>
-        <input
+        <Text>Gerar DRE MTR</Text>
+        <Input
           type="date"
           required={true}
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
-        <input
+        <Input
           type="date"
           required={true}
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
-        <button onClick={handleGetDRE}>Gerar</button>
+        <Button onClick={handleGetDRE}>Gerar</Button>
         {isLoading ? <Loader /> : ''}
 
         <br></br>
 
         <Table>
-          {/* <caption>DRE</caption> */}
+          <Caption>DRE</Caption>
           <thead>
             <Tr>
               <Th>Nº</Th>
@@ -130,7 +140,12 @@ const Dashboard: React.FC = (): ReactElement => {
                 <Td>{item.CODCONTACONTABIL}</Td>
                 <Td>{item.DESCCONTACONTABIL}</Td>
                 <Td>{item.NATUREZA}</Td>
-                <Td>{item.VALOR}</Td>
+                <Td>
+                  {item.VALOR.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  })}
+                </Td>
                 <Td>{item.HISTORICO}</Td>
               </Tr>
             ))}

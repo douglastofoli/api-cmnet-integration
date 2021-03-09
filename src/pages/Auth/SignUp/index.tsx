@@ -65,38 +65,10 @@ const SignUp: React.FC = (): ReactElement => {
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Criar conta</Button>
         <RegisterLink to="/">Fazer login</RegisterLink>
       </Form>
     </>
-    // <Container>
-    //   <PSignIn>Sign up</PSignIn>
-    //   <Form onSubmit={handleSignUp}>
-    //     {error && <p>{error}</p>}
-    //     <Input
-    //       type="email"
-    //       placeholder="E-mail"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //     />
-    //     <Input
-    //       type="password"
-    //       placeholder="Senha"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //     />
-    //     <Input
-    //       type="password"
-    //       placeholder="Repita a senha"
-    //       value={passwordConfirmation}
-    //       onChange={(e) => setPasswordConfirmation(e.target.value)}
-    //     />
-    //     <Button type="submit">Registrar</Button>
-    //     <PForgotPassword>
-    //       <Link to="/">Fazer login</Link>
-    //     </PForgotPassword>
-    //   </Form>
-    // </Container>
   );
 };
 

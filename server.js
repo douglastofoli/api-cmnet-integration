@@ -1,14 +1,13 @@
-// const express = require('express');
-import express from 'express';
-
+const express = require('express');
+const path = require('path');
 const app = express();
 
-const baseDir = `${__dirname}/build/`;
+app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('*', (req, res) => res.sendFile('index.html', { root: baseDir }));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-const port = 4000;
-
-app.listen(port, () =>
-  console.log(`Servidor subiu com sucesso em http://localhost:${port}`)
-);
+app.listen(8080, () => {
+  console.log('Web iniciado. http://172.23.0.101:8080');
+});

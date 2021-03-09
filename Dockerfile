@@ -14,12 +14,13 @@ WORKDIR /usr/app
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN npm install
+# RUN npm install
 
-COPY . .
+COPY build/ .
+COPY server.js . 
 
-EXPOSE 3000
+EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "node", "server.js" ]
