@@ -50,8 +50,10 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY . ./
 
-EXPOSE 7777
+RUN npx tsc
+
+EXPOSE 3333
 
 CMD [ "npm", "run", "dev" ]
