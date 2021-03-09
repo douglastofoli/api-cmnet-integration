@@ -8,7 +8,7 @@
     "start": "node -r tsconfig-paths/register dist/src/index.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
     "build": "npx tsc",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -f ormconfig.json",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -f ormconfig.js",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
