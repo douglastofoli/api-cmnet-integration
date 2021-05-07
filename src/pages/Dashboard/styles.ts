@@ -10,6 +10,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const Error = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  margin: 20px 40px;
+  padding-top: 5px;
+`;
+
 export const Text = styled.p`
   font-family: 'Roboto', sans-serif;
   font-weight: 700;

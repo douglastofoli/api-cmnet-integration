@@ -9,6 +9,7 @@ import Loader from '../../components/Loader';
 
 import {
   GlobalStyle,
+  Error,
   Text,
   Input,
   Button,
@@ -46,11 +47,21 @@ const Dashboard: React.FC = (): ReactElement => {
 
   async function handleGetDRE() {
     try {
+      if (!startDate && !endDate) {
+        setError('Os dois campos precisam ser preenchidos.');
+        return;
+      }
+
+      if (startDate > endDate) {
+        setError('A data inicial não pode ser maior que a data final!');
+        return;
+      }
+
       const date1 = startDate.split('-');
       const date2 = endDate.split('-');
 
       setIsLoading(true);
-
+      setError('');
       const response = await api.get('/api/mabuthermas/dre/get', {
         params: {
           diaInicial: date1[2],
@@ -79,10 +90,8 @@ const Dashboard: React.FC = (): ReactElement => {
         });
       setIsLoading(false);
     } catch (error) {
-      setError('Sessão expirada!');
+      setError('Algo deu errado ao buscar os dados. Tente novamente.');
       console.log(error);
-      logout();
-      history.push('/');
     }
   }
 
@@ -90,7 +99,6 @@ const Dashboard: React.FC = (): ReactElement => {
     <>
       <GlobalStyle />
       <div>
-        {error && <p>{error}</p>}
         <Text>Gerar DRE MTR</Text>
         <Input
           type="date"
@@ -105,6 +113,7 @@ const Dashboard: React.FC = (): ReactElement => {
           onChange={(e) => setEndDate(e.target.value)}
         />
         <Button onClick={handleGetDRE}>Gerar</Button>
+        {error && <Error>{error}</Error>}
         {isLoading ? <Loader /> : ''}
 
         <br></br>
