@@ -27,3 +27,11 @@ createConnection(String(process.env.DB3_NAME)) // conecta na base esolution
   .catch((error) => {
     console.error(error);
   });
+
+createConnection(String(process.env.DB4_NAME)) // conecta na base esolution
+  .then(() => {
+    console.log(`Database ${process.env.DB4_NAME} connected with success!`);
+  })
+  .catch((error) => {
+    console.error(error);
+  });

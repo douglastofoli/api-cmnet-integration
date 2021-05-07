@@ -4,11 +4,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Unique,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
 import { Length } from 'class-validator';
 import * as bcrypt from 'bcryptjs';
 
+import History from './History';
 @Entity('users')
 @Unique(['email'])
 export default class User {
@@ -24,6 +26,9 @@ export default class User {
 
   @Column({ default: false })
   public active: boolean;
+
+  @OneToMany(() => History, (history) => history.user)
+  histories: History;
 
   @Column()
   @CreateDateColumn()

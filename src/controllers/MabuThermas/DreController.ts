@@ -3,6 +3,8 @@ import path from 'path';
 import { getManager } from 'typeorm';
 
 import exportCSV from '../../utils/exportCSV';
+import getUserId from '../../utils/getUserId';
+import saveLogs from '../../utils/saveLogs';
 
 export default {
   async index(request: Request, response: Response): Promise<void> {
@@ -15,7 +17,12 @@ export default {
     const mes: string = request.query.mes as string;
     const ano: string = request.query.ano as string;
 
+    const userToken: string = request.headers.authorization as string;
+    const { userId } = getUserId(userToken);
+
     const manager = getManager(process.env.DB2_NAME);
+
+    const log = `Gerou DRE com data entre ${diaInicial}-${mesInicial}-${anoInicial} e ${diaFinal}-${mesFinal}-${anoFinal}`;
 
     const octal_escapa = '\\1.\\2.\\3.\\4.\\5.\\6';
 
@@ -70,26 +77,26 @@ export default {
           SELECT
             C.PLACONTA,
             L.CODCENTROCUSTO,
-            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR * -1)) AS SALDOANT
+            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR)) AS SALDOANT
           FROM
             PLANOCONTA C,
             LANCAMENTO L,
             PLANILHA P
           WHERE
             (L.PLACONTA LIKE RTRIM(C.PLACONTA) || '%')
-            AND (L.PLANO = C.PLANO)
-            AND (P.PLNCODIGO = L.PLNCODIGO)
-            AND (P.PEREXERCICIO = ${ano})
-            AND (P.PLNDATDIA < TO_DATE('${diaInicial}/${mesInicial}/${anoInicial}', 'dd/mm/yyyy'))
-            AND (P.PLNDATDIA >= TO_DATE('${diaFinal}/${mesFinal}/${anoFinal}', 'dd/mm/yyyy'))
-            AND (P.IDPESSOA = 3)
-            AND (L.PLANO = 1)
-            AND (L.PLACONTA >= '0                 ')
-            AND (L.PLACONTA <= '999999999999999999')
-            AND (C.PLATIPO = 'A')
-          GROUP BY
-            C.PLACONTA,
-            L.CODCENTROCUSTO) SA,
+              AND (L.PLANO = C.PLANO)
+                AND (P.PLNCODIGO = L.PLNCODIGO)
+                  AND (P.PEREXERCICIO = ${ano})
+                    AND (P.PLNDATDIA < TO_DATE('${diaInicial}/${mesInicial}/${anoInicial}', 'dd/mm/yyyy'))
+                      AND (P.PLNDATDIA >= TO_DATE('${diaFinal}/${mesFinal}/${anoFinal}', 'dd/mm/yyyy'))
+                        AND (P.IDPESSOA = 3)
+                          AND (L.PLANO = 1)
+                            AND (L.PLACONTA >= '0                 ')
+                              AND (L.PLACONTA <= '999999999999999999')
+                                AND (C.PLATIPO = 'A')
+                              GROUP BY
+                                C.PLACONTA,
+                                L.CODCENTROCUSTO) SA,
           (
           SELECT
             PLACONTA,
@@ -98,14 +105,14 @@ export default {
             PLANOSALDO
           WHERE
             (PEREXERCICIO = ${ano})
-            AND ((PERNUMERO IS NULL)
-            OR (PERNUMERO < 1))
-            AND (IDPESSOA = 3)
-            AND (PLANO = 1)
-            AND (PLACONTA >= '0                 ')
-            AND (PLACONTA <= '999999999999999999')
-          GROUP BY
-            PLACONTA ) SN,
+              AND ((PERNUMERO IS NULL)
+                OR (PERNUMERO < 1))
+                AND (IDPESSOA = 3)
+                  AND (PLANO = 1)
+                    AND (PLACONTA >= '0                 ')
+                      AND (PLACONTA <= '999999999999999999')
+                    GROUP BY
+                      PLACONTA ) SN,
           (
           SELECT
             C.PLACONTA,
@@ -119,7 +126,7 @@ export default {
             SUM(DECODE(L.LACDEBCRE, 'C', L.LACVALOR, 0.00)) AS CRED,
             SUM(DECODE(C.PLATIPO, 'A', DECODE(L.LACDEBCRE, 'D', L.LACVALOR, 0.00), 0.00)) AS DEBA,
             SUM(DECODE(C.PLATIPO, 'A', DECODE(L.LACDEBCRE, 'C', L.LACVALOR, 0.00), 0.00)) AS CREDA,
-            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR)) AS MOV ,
+            SUM(DECODE(L.LACDEBCRE, 'D', L.LACVALOR, L.LACVALOR * -1)) AS MOV ,
             L.CODCENTROCUSTO
           FROM
             PLANOCONTA C,
@@ -127,25 +134,25 @@ export default {
             PLANILHA P
           WHERE
             (L.PLACONTA LIKE RTRIM(C.PLACONTA) || '%')
-            AND (L.PLANO = C.PLANO)
-            AND (P.PLNCODIGO = L.PLNCODIGO)
-            AND (P.PEREXERCICIO = ${ano})
-            AND (P.PLNDATDIA >= TO_DATE('${diaInicial}/${mesInicial}/${anoInicial}', 'dd/mm/yyyy'))
-            AND (P.PLNDATDIA <= TO_DATE('${diaFinal}/${mesFinal}/${anoFinal}', 'dd/mm/yyyy'))
-            AND (P.IDPESSOA = 3)
-            AND (L.PLANO = 1)
-            AND (L.PLACONTA >= '0                 ')
-            AND (L.PLACONTA <= '999999999999999999')
-            AND (C.PLATIPO = 'A')
-          GROUP BY
-            C.PLACONTA,
-            L.CODCENTROCUSTO,
-            P.PERNUMERO,
-            P.PEREXERCICIO,
-            P.IDPESSOA,
-            L.LACHIST1,
-            P.PLNDATDIA,
-            L.LACNUMDOC) S,
+              AND (L.PLANO = C.PLANO)
+                AND (P.PLNCODIGO = L.PLNCODIGO)
+                  AND (P.PEREXERCICIO = ${ano})
+                    AND (P.PLNDATDIA >= TO_DATE('${diaInicial}/${mesInicial}/${anoInicial}', 'dd/mm/yyyy'))
+                      AND (P.PLNDATDIA <= TO_DATE('${diaFinal}/${mesFinal}/${anoFinal}', 'dd/mm/yyyy'))
+                        AND (P.IDPESSOA = 3)
+                          AND (L.PLANO = 1)
+                            AND (L.PLACONTA >= '0                 ')
+                              AND (L.PLACONTA <= '999999999999999999')
+                                AND (C.PLATIPO = 'A')
+                              GROUP BY
+                                C.PLACONTA,
+                                L.CODCENTROCUSTO,
+                                P.PERNUMERO,
+                                P.PEREXERCICIO,
+                                P.IDPESSOA,
+                                L.LACHIST1,
+                                P.PLNDATDIA,
+                                L.LACNUMDOC) S,
           CENTCUST CC
         WHERE
           (C.PLACONTA = S.PLACONTA(+))
@@ -187,22 +194,23 @@ export default {
           ((DECODE(NVL(S.DEB, 0.00), 0.00, (DECODE(NVL(S.CRED, 0.00), 0.00, (DECODE(NVL(SN.SALDOAN, 0.00), 0.00, (DECODE(NVL(SA.SALDOANT, 0.00), 0.00, '0', '1')), '1')), '1')), '1')) = '1')
         ORDER BY
           C.PLACONTA
-
         `
       );
 
       const formatedData = exportCSV('DRE', mes, ano, data);
 
+      saveLogs(log, userId);
+
       response.status(200).json({ data: formatedData });
 
       return;
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       response.status(500).json({ error });
       return;
     }
   },
-  downloadFile(request: Request, response: Response): void {
+  downloadFile(_request: Request, response: Response): void {
     try {
       const options = {
         root: path.join(__dirname, '..', '..', '..', 'data'),

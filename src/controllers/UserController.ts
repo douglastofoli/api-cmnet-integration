@@ -46,7 +46,7 @@ export default {
       response.status(201).json({ message: 'Usuário registrado com sucesso!' });
       return;
     } catch (error) {
-      response.status(409).json({ error: error });
+      response.status(409).json({ error: 'Este e-mail já está em uso!' });
       return;
     }
   }
